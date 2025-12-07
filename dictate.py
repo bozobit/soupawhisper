@@ -80,7 +80,6 @@ class Dictation:
         self.model = None
         self.model_loaded = threading.Event()
         self.model_error = None
-        self.ctrl_pressed = False
         self.running = True
 
         # Load model in background
@@ -188,16 +187,10 @@ class Dictation:
     def on_press(self, key):
         if key == HOTKEY:
             self.start_recording()
-        elif key == keyboard.Key.ctrl_l or key == keyboard.Key.ctrl_r:
-            self.ctrl_pressed = True
-        elif self.ctrl_pressed and hasattr(key, 'char') and key.char == 'c':
-            self.stop()
 
     def on_release(self, key):
         if key == HOTKEY:
             self.stop_recording()
-        elif key == keyboard.Key.ctrl_l or key == keyboard.Key.ctrl_r:
-            self.ctrl_pressed = False
 
     def stop(self):
         print("\nExiting...")

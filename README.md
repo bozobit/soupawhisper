@@ -72,7 +72,7 @@ poetry run python dictate.py
 
 - Hold **F12** to record
 - Release to transcribe → copies to clipboard and types into active input
-- Press **Ctrl+C** to quit
+- Press **Ctrl+C** to quit (when running manually)
 
 ## Run as a systemd Service
 
