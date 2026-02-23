@@ -81,6 +81,7 @@ class Dictation:
         self.model_loaded = threading.Event()
         self.model_error = None
         self.running = True
+        self.ctrl_held = False
 
         # Load model in background
         print(f"Loading Whisper model ({MODEL_SIZE})...")
@@ -202,11 +203,15 @@ class Dictation:
                 os.unlink(self.temp_file.name)
 
     def on_press(self, key):
-        if key == HOTKEY:
+        if key in (keyboard.Key.ctrl_l, keyboard.Key.ctrl_r):
+            self.ctrl_held = True
+        if key == HOTKEY and not self.ctrl_held:
             self.start_recording()
 
     def on_release(self, key):
-        if key == HOTKEY:
+        if key in (keyboard.Key.ctrl_l, keyboard.Key.ctrl_r):
+            self.ctrl_held = False
+        if key == HOTKEY and not self.ctrl_held:
             self.stop_recording()
 
     def stop(self):
